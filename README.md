@@ -7,9 +7,9 @@ Is a straightforward solution for your daily Instagram experience. This beautifu
 For this bot to make magic, you will need:
 
   - Google Chrome
-  link: https://www.google.com/chrome/browser/desktop/index.html
+  (Download link: https://www.google.com/chrome/browser/desktop/index.html )
   - NodeJS
-  link: https://nodejs.org/en/
+  (Download link: https://nodejs.org/en/ )
   - Instagram account
   
 # Usage
