@@ -1,0 +1,20 @@
+{
+  "name": "instaheart",
+  "version": "1.0.0",
+  "description": "insta crawler",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "insta",
+    "bot",
+    "crawler"
+  ],
+  "author": "Liutauras Razma",
+  "license": "ISC",
+  "dependencies": {
+    "chromedriver": "^2.33.2",
+    "selenium-webdriver": "^3.6.0"
+  }
+}
