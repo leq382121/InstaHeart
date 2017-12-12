@@ -267,10 +267,9 @@ else if (mode == 3) {
     console.log("#",peopletofollow,"people are going to be followed and liked per session using #", hashtag, "and this will be repeated", sessionCounter, "times." );
 
     for (s = 0; s < sessionCounter; s++) {
-        let date = new Date();
 
         driver.get('https://www.instagram.com/explore/tags/'+ hashtag +'/').then(function () {
-            console.log("# Initiating new session. Present time:", date.getHours() + ":" + date.getMinutes());
+            console.log("# Initiating new session. ---");
         });
         driver.wait(until.elementLocated(By.className('_mck9w')));
         driver.findElements(By.className('_mck9w')).then((res) => {
@@ -281,6 +280,7 @@ else if (mode == 3) {
             });
 
             for (p = 0; p < peopletofollow; p++) {
+                let date = new Date();
                 driver.findElements(By.className('_qv64e')).then((res) => {
                     console.log("# Clicking follow button");
                     res[0].click();
@@ -292,7 +292,8 @@ else if (mode == 3) {
                 })
                 driver.sleep(2000);
                 driver.findElements(By.className('coreSpriteRightPaginationArrow')).then((res) => {
-                    console.log("# Gong to the next picture.");
+                    let date = new Date();
+                    console.log("# Gong to the next picture. Present time:", date.getHours() + ":" + date.getMinutes());
                     res[0].click();
                 });
                 driver.sleep(4000);
