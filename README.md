@@ -26,6 +26,12 @@ To start enjoying your Margarita and see how your iron is doing what is suppose 
 $ node bot.js
 ```
 
+- *Windows users* - You can just double click install.bat file once for installation and after its finished, start.bat for using bot in the future instead of entering commands by hand.
+
+- *Mac users* - your time will come soon..
+
+**Make sure you don't drop down your Chrome window, rather just put it at some corner. If you drop it down, InstaHeart will lose it's mind and stop it's job.**
+
 # info.json
 everything you interested in is located in the `info.json` file. 
 
@@ -67,12 +73,5 @@ everything you interested in is located in the `info.json` file.
 - 2 (`appBoxAppearing = false`) same as 1st mode, but instead of liking images, this will post comments automatically. 
 - 2 (`appBoxAppearing = true`) same again, but if you get an box in the bottom that offers you to try Instagram on your phone, this will disable the box.
 - 3  going to follow people and like images as much as defined in `howmanypeopletofollowpersession` using hashtag defined in `hashtag` and will repeat this as many times as defined in `sessionCounter` with pauses which time is defined in seconds `pauseBetweenSessions`.
-
-
-# Important
-
-Make sure you don't drop down your Chrome window, rather just put it at some corner. If you drop it down, InstaHeart will lose it's mind and stop it's job. 
-
-If you are a Windows user, you can just double-click install.bat instead of running `npm install` in temrinal. Use start.bat to run `node bot.js`. (Sorry MacOS users, .command requires full path and I have no idea about the path you are keeping your files in.)
 
 
