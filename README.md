@@ -39,7 +39,9 @@ everything you interested in is located in the `info.json` file.
   "pauseBetweenSessions":90,
   "commentsToWrite": 4,
   "comments": ["com0", "com1", "com2", "com3", "com4"],
-  "appBoxAppearing":false
+  "appBoxAppearing":false,
+  "ifAuthentificatioRequired":false,
+  "minutesForAuth":2
 }
 ```
 - `ignick` (string) is your instagram nickname.
@@ -50,7 +52,9 @@ everything you interested in is located in the `info.json` file.
 - `pauseBetweenSessions` (number) is how many seconds bot will wait between sessions to click.
 - `commentsToWrite` [Array of strings] how many comments you wish to write (for now - max 4 or less).
 - `comments` (number) what comments to write. InstaHeart is posting a random comments. 
-- `appBoxAppearing` (Boolean) here you have a Boolean stating if you have an irritating box in the bottom popping up. 
+- `appBoxAppearing` (boolean) here you have a Boolean stating if you have an irritating box in the bottom popping up. 
+- `ifAuthentificatioRequired` (boolean) If Instagram is smart enough to determine few failed logins, set it to true and this will give you some time to autenthicate yourself. After authentication just wait remaining time and it will continue.
+- `minutesForAuth` (number) If `ifAuthentificatioRequired`is set to true, this will allow you to set how fast you are able to authenticate yourself (in minutes).
  
 # "mode"
  

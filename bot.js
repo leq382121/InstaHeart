@@ -37,6 +37,8 @@ const commentsToWrite = info.commentsToWrite;
 const comment = info.comments;
 const irritatingBox = info.appBoxAppearing;
 const mode = info.mode;
+const authbool = info.ifAuthentificatioRequired;
+const timeforauth = info.minutesForAuth * (60000);
 
 /**
  * Process
@@ -51,6 +53,12 @@ driver.findElement(By.name('username')).sendKeys(nick);
 driver.findElement(By.name('password')).sendKeys(pass);
 driver.sleep(1000);
 driver.findElement(By.className('_qv64e')).click().then(function () {console.log("# Loging in...");});
+
+if (authbool == true){
+    console.log("# You have", timeforauth / 60000 , "minutes to choose defined authentification and prove that it's you.");
+    driver.sleep(timeforauth);
+}
+
 driver.sleep(1000);
 driver.findElements(By.className("//a[contains(@class, '_eszkz')]")).then(found => console.log("# Instagram feed loaded..."));
 
@@ -71,6 +79,7 @@ if (mode == 0) {
 
 //clicks defined amount of likes for defined number of repetitions (sessions) and pauses for defined amount of time
 else if (mode == 1) {
+    
     console.log("# Number of sessions:", sessionCounter);
     for (n = 0; n < sessionCounter; n++) {
 
@@ -87,7 +96,8 @@ else if (mode == 1) {
             }
 
         ).then(function () {
-            console.log("# Session finished. pausing for", pauseBetweenSessions, "seconds.");
+            let date = new Date();
+            console.log("# Session finished. pausing for", pauseBetweenSessions, "seconds. Present time:", date.getHours() + ":" + date.getMinutes());
             driver.sleep(pauseBetweenSessions * 1000);
         });
     }
@@ -257,5 +267,6 @@ else {
 }
 
 driver.quit().then(function () {
-    console.log("# Job is done!")
+    let date = new Date();
+    console.log("# Job is done! Time of job completion:", date.getHours() + ":" + date.getMinutes()) ;
 });

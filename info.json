@@ -1,11 +1,13 @@
 {
 "ignick":"",
 "igpass":"",
-"mode": 2,
+"mode": 1,
 "sessionCounter": 300,
 "likesToClick":4,
 "pauseBetweenSessions":90,
 "commentsToWrite": 4,
-"comments": ["Dope! ;)", "Osom!", "Kontrastas! (y)", "Geras!", ":) :)", "Wooow!"],
-"appBoxAppearing":false
+"comments": [";)", "nice!", "cool angle :)", "cool:)", ":) :)", "Wooow!"],
+"appBoxAppearing":false,
+"ifAuthentificatioRequired":false,
+"minutesForAuth":2
 }
