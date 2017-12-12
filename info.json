@@ -1,13 +1,15 @@
 {
 "ignick":"",
 "igpass":"",
-"mode": 1,
+"mode": 3,
 "sessionCounter": 300,
 "likesToClick":4,
-"pauseBetweenSessions":90,
 "commentsToWrite": 4,
+"pauseBetweenSessions":90,
 "comments": [";)", "nice!", "cool angle :)", "cool:)", ":) :)", "Wooow!"],
 "appBoxAppearing":false,
 "ifAuthentificatioRequired":false,
-"minutesForAuth":2
+"minutesForAuth":2,
+"hashtag": "Lithuania",
+"howmanypeopletofollowpersession":2
 }

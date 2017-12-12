@@ -3,13 +3,15 @@
 #       InstaHeart v1.1 - straighfoward instagram crawler
 #       Author: Liutauras Razma
 #       Date created: 2017-11-04
-#       Last update: 2017-12-04
+#       Last update: 2017-12-12
 #
 #       Mode 0 = clicks ammout of likes you have defined in "likesToClick" and quits.
 #       Mode 1 = same but repeats liking process as many times as you set in "sessionCounter" 
 #       and pauses session refresh process for as long as "pauseBetweenSessions" is defined (in seconds)
 #       Mode 2 = Comments different people photos using value specified cin "comments" as many times as
 #       writen in "commentsToWrite".
+#       Mode 3 = Follows people and likes their image using your defined hastag. Wil lfollow as many people
+#       as you wish as many times you need and will pause between sesions also, as you defined.
 # 
 */
 
@@ -32,13 +34,15 @@ const nick = info.ignick;
 const pass = info.igpass;
 const sessionCounter = info.sessionCounter;
 const likesToClick = info.likesToClick;
-const pauseBetweenSessions = info.pauseBetweenSessions; //seconds
+const pauseBetweenSessions = info.pauseBetweenSessions * 1000; //seconds
 const commentsToWrite = info.commentsToWrite;
 const comment = info.comments;
 const irritatingBox = info.appBoxAppearing;
 const mode = info.mode;
 const authbool = info.ifAuthentificatioRequired;
 const timeforauth = info.minutesForAuth * (60000);
+const hashtag = info.hashtag;
+const peopletofollow = info.howmanypeopletofollowpersession;
 
 /**
  * Process
@@ -98,7 +102,7 @@ else if (mode == 1) {
         ).then(function () {
             let date = new Date();
             console.log("# Session finished. pausing for", pauseBetweenSessions, "seconds. Present time:", date.getHours() + ":" + date.getMinutes());
-            driver.sleep(pauseBetweenSessions * 1000);
+            driver.sleep(pauseBetweenSessions);
         });
     }
 }
@@ -174,11 +178,10 @@ else if (mode == 2 && irritatingBox == true) {
                     ).then(
                         function (res) {
                             for (b = 0; b < commentsToWrite; b++) {
-                                //console.log("1. index:", b);
                                 driver.sleep(1000);
                                 comBoxArray[b].sendKeys(comment[Math.floor(Math.random() * (comment.length))]);
                                 comBoxArray[b].sendKeys(webdriver.Key.ENTER);
-                                driver.sleep(5000); // waiting until comment will be published 
+                                driver.sleep(5000);
                             }
                             console.log("# Done!", commentsToWrite, "comments were published!");
                         }
@@ -255,10 +258,50 @@ else if (mode == 2 && irritatingBox == false) {
             }
         ).then(function () {
             console.log("# Session finished. pausing for", pauseBetweenSessions, "seconds.");
-            driver.sleep(pauseBetweenSessions * 1000);
+            driver.sleep(pauseBetweenSessions);
         });
     }
 } 
+
+else if (mode == 3) {
+    console.log("#",peopletofollow,"people are going to be followed and liked per session using #", hashtag, "and this will be repeated", sessionCounter, "times." );
+
+    for (s = 0; s < sessionCounter; s++) {
+        let date = new Date();
+
+        driver.get('https://www.instagram.com/explore/tags/'+ hashtag +'/').then(function () {
+            console.log("# Initiating new session. Present time:", date.getHours() + ":" + date.getMinutes());
+        });
+        driver.wait(until.elementLocated(By.className('_mck9w')));
+        driver.findElements(By.className('_mck9w')).then((res) => {
+            res[9].click();
+
+            driver.wait(until.elementLocated(By.className('coreSpriteRightPaginationArrow'))).then(function(){
+                console.log("# Image loaded. Liking and following.")
+            });
+
+            for (p = 0; p < peopletofollow; p++) {
+                driver.findElements(By.className('_qv64e')).then((res) => {
+                    console.log("# Clicking follow button");
+                    res[0].click();
+                });
+                driver.sleep(2000);
+                driver.findElements(By.className('_eszkz')).then((res) => {
+                    console.log("# Clicking <3 button");
+                    res[0].click();
+                })
+                driver.sleep(2000);
+                driver.findElements(By.className('coreSpriteRightPaginationArrow')).then((res) => {
+                    console.log("# Gong to the next picture.");
+                    res[0].click();
+                });
+                driver.sleep(4000);
+            }
+            console.log("# Session will be paused for", (pauseBetweenSessions/1000), "seconds.");
+            driver.sleep(pauseBetweenSessions);
+        })
+    }
+}
 
 else {
     driver.quit().then(function () {

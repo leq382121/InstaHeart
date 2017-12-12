@@ -1,10 +1,10 @@
 # InstaHeart
 
-Is a straightforward solution for your daily Instagram experience. This beautiful bot will connect to your Instagram account and starts liking images on your feed immediately or will automatically post comments you wish too!
+Is a straightforward solution for your daily Instagram experience. This beautiful bot will connect to your Instagram account and starts liking images on your feed, follows people using your defined hashtag immediately or will automatically post comments you wish too!
 
 # Requirements
 
-For this bot to make magic, you will need:
+For InstaHeart to make magic, you will need:
 
   - Google Chrome
   (Download link: https://www.google.com/chrome/browser/desktop/index.html )
@@ -23,7 +23,7 @@ $ npm install
 To start enjoying your Margarita and see how your iron is doing what is suppose to do - make your life easier, locate yourself in the folder, edit info.json according to your needs and run this in the terminal:
 
 ```sh
-node bot.js
+$ node bot.js
 ```
 
 # info.json
@@ -41,7 +41,9 @@ everything you interested in is located in the `info.json` file.
   "comments": ["com0", "com1", "com2", "com3", "com4"],
   "appBoxAppearing":false,
   "ifAuthentificatioRequired":false,
-  "minutesForAuth":2
+  "minutesForAuth":2,
+  "hashtag":food,
+  "howmanypeopletofollowpersession":2
 }
 ```
 - `ignick` (string) is your instagram nickname.
@@ -55,13 +57,16 @@ everything you interested in is located in the `info.json` file.
 - `appBoxAppearing` (boolean) here you have a Boolean stating if you have an irritating box in the bottom popping up. 
 - `ifAuthentificatioRequired` (boolean) If Instagram is smart enough to determine few failed logins, set it to true and this will give you some time to autenthicate yourself. After authentication just wait remaining time and it will continue.
 - `minutesForAuth` (number) If `ifAuthentificatioRequired`is set to true, this will allow you to set how fast you are able to authenticate yourself (in minutes).
+- `hashtag` (string) if mode 3 is selected, this will be the hashtag used to follow and like new people using it. (write just a word without #).
+- `howmanypeopletofollowpersession` (number) is how many people you want to follow per session.
  
 # "mode"
  
 - 0 is going to like images as much as defined in `likesToClick`.
-- 1 is going to like images as much as defined in `likesToClick` and will repeat the process as many times, as defined in `sessionCounter` with pauses which time is defined by seconds in `pauseBetweenSessions`.
+- 1 is going to like images as much as defined in `likesToClick` and will repeat the process as many times, as defined in `sessionCounter` with pauses which time is defined in seconds `pauseBetweenSessions`.
 - 2 (`appBoxAppearing = false`) same as 1st mode, but instead of liking images, this will post comments automatically. 
 - 2 (`appBoxAppearing = true`) same again, but if you get an box in the bottom that offers you to try Instagram on your phone, this will disable the box.
+- 3  going to follow people and like images as much as defined in `howmanypeopletofollowpersession` using hashtag defined in `hashtag` and will repeat this as many times as defined in `sessionCounter` with pauses which time is defined in seconds `pauseBetweenSessions`.
 
 
 # Important
