@@ -5,11 +5,11 @@
 "sessionCounter": 300,
 "likesToClick":4,
 "commentsToWrite": 4,
-"pauseBetweenSessions":90,
-"comments": [";)", "nice!", "cool angle :)", "cool:)", ":) :)", "Wooow!"],
-"appBoxAppearing":false,
+"pauseBetweenSessions":400,
+"comments": ["nice angle!", "nice!", "cool:)", "!!!cute", "phenomenal!", "Damnn!!", "Amazing", "unreal", "Stunning"],
+"appBoxAppearing":true,
 "ifAuthentificatioRequired":false,
 "minutesForAuth":2,
-"hashtag": "Lithuania",
-"howmanypeopletofollowpersession":2
+"hashtag": "architecture",
+"howmanypeopletofollowpersession":10
 }

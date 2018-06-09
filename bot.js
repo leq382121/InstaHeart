@@ -3,7 +3,7 @@
 #       InstaHeart v1.1 - straighfoward instagram crawler
 #       Author: Liutauras Razma
 #       Date created: 2017-11-04
-#       Last update: 2017-12-12
+#       Last update: 2018-06-10
 #
 #       Mode 0 = clicks ammout of likes you have defined in "likesToClick" and quits.
 #       Mode 1 = same but repeats liking process as many times as you set in "sessionCounter" 
@@ -50,25 +50,30 @@ const peopletofollow = info.howmanypeopletofollowpersession;
 
 driver.manage().window().setSize(windowWidth, 700); //683
 console.log("# Mode", mode, "is selected. Starting the process...")
-driver.get('http://www.instagram.com').then(function () {console.log("# Going to website...");});
+driver.get('http://www.instagram.com').then(function () {
+    console.log("# Going to website...");
+});
+driver.sleep(3000);
 //driver.findElement(By.className('_msxj2')).click();
-driver.findElement(By.xpath("//p[@class='_g9ean']/a")).click();
-driver.findElement(By.name('username')).sendKeys(nick);
-driver.findElement(By.name('password')).sendKeys(pass);
+driver.findElement(By.xpath("//html//form[@class='XFYOY']/span[@class='Um91Z _1OSdk']/button[1]")).click();
+driver.findElement(By.xpath("//input[@id='email']")).sendKeys(nick);
+driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(pass);
 driver.sleep(1000);
-driver.findElement(By.className('_qv64e')).click().then(function () {console.log("# Loging in...");});
+driver.findElement(By.xpath("//button[@id='loginbutton']")).click().then(function () {
+    console.log("# Loging in...");
+});
 
-if (authbool == true){
-    console.log("# You have", timeforauth / 60000 , "minutes to choose defined authentification and prove that it's you.");
+if (authbool == true) {
+    console.log("# You have", timeforauth / 60000, "minutes to choose defined authentification and prove that it's you.");
     driver.sleep(timeforauth);
 }
 
 driver.sleep(1000);
-driver.findElements(By.className("//a[contains(@class, '_eszkz')]")).then(found => console.log("# Instagram feed loaded..."));
+driver.findElements(By.className("//a[contains(@class, 'tiVCN')]")).then(found => console.log("# Instagram feed loaded..."));
 
 //click only defined amount of likes and bye bye.
 if (mode == 0) {
-    driver.findElements(By.xpath("//a[contains(@class, '_eszkz')]")).then(
+    driver.findElements(By.xpath("//a[contains(@class, 'tiVCN')]")).then(
         function (res) {
             // res here is an array of targeted elemnts (hearts)
             for (i = 0; i < likesToClick; i++) {
@@ -83,14 +88,14 @@ if (mode == 0) {
 
 //clicks defined amount of likes for defined number of repetitions (sessions) and pauses for defined amount of time
 else if (mode == 1) {
-    
+
     console.log("# Number of sessions:", sessionCounter);
     for (n = 0; n < sessionCounter; n++) {
 
         driver.get('http://www.instagram.com').then(function () {
             console.log("# Initiating new session..")
         });
-        driver.findElements(By.xpath("//a[contains(@class, '_eszkz')]")).then(
+        driver.findElements(By.xpath("//a[contains(@class, 'tiVCN')]")).then(
 
             function (res) {
                 for (var i = 0; i < likesToClick; i++) {
@@ -105,9 +110,7 @@ else if (mode == 1) {
             driver.sleep(pauseBetweenSessions);
         });
     }
-}
-
-else if (mode == 2 && irritatingBox == true) {
+} else if (mode == 2 && irritatingBox == true) {
     console.log("# - Comment is going to be used:", comment, "and irritating box is set to", irritatingBox);
     console.log("# - Will be posted", commentsToWrite, "times");
 
@@ -140,7 +143,6 @@ else if (mode == 2 && irritatingBox == true) {
                 if (boxgone == true) {
                     //_p6oxf - icon box class
                     //_bilrf - text box class
-                    //_55p7a - post button class
 
                     //getting all com Icons
                     driver.findElements(By.xpath("//a[contains(@class, '_p6oxf')]")).then(
@@ -192,33 +194,54 @@ else if (mode == 2 && irritatingBox == true) {
             }
         );
     }
-}
-
-else if (mode == 2 && irritatingBox == false) {
+} else if (mode == 2 && irritatingBox == false) {
     console.log("# - Comment is going to be used:", comment, "and irritating box is set to", irritatingBox);
     console.log("# - Will be posted", commentsToWrite, "times");
 
     let comIconArray, comBoxArray
+
+
+    if (irritatingBox == true) {
+        driver.wait(until.elementLocated(By.className('_lilm5')), 4000).then(
+
+            function (res) {
+
+                driver.sleep(1500); //because element is moving.
+                res.click().then(
+                    function (res) {
+                        console.log("# Box is gone, continuing...");
+                        driver.sleep(1000);
+                        boxgone = true;
+                    }
+                );
+            }
+        );
+    }
 
     for (s = 0; s < sessionCounter; s++) {
 
         let iconsFound = false;
         let iconsClicked = false;
 
-        //_p6oxf - icon box class
-        //_bilrf - text box class
-        //_55p7a - post button class
+        //OV9Wd - icon box class
+        //Ypffh - text box class
 
         driver.get('http://www.instagram.com').then(function () {
             console.log("# Initiating new session..")
         });
-        driver.findElements(By.xpath("//a[contains(@class, '_p6oxf')]")).then(
+        driver.findElements(By.xpath("//a[contains(@class, 'OV9Wd')]")).then(
             function (res) {
                 comIconArray = res;
                 console.log("# finding and setting icons array to variable");
                 iconsFound = true;
             }
 
+        ).then(
+          
+          function() {
+            driver.sleep(5000);
+          }
+        
         ).then(
             function (res) {
                 if (iconsFound == true) {
@@ -236,7 +259,7 @@ else if (mode == 2 && irritatingBox == false) {
         ).then(
             function (res) {
                 if (iconsClicked == true) {
-                    driver.findElements(By.className('_bilrf')).then(
+                    driver.findElements(By.className('Ypffh')).then(
                         function (res) {
                             comBoxArray = res;
                             console.log("# Reading all the textboxes");
@@ -261,32 +284,33 @@ else if (mode == 2 && irritatingBox == false) {
             driver.sleep(pauseBetweenSessions);
         });
     }
-} 
-
-else if (mode == 3) {
-    console.log("#",peopletofollow,"people are going to be followed and liked per session using #", hashtag, "and this will be repeated", sessionCounter, "times." );
+} else if (mode == 3) {
+    driver.sleep(3000);
+    console.log("#", peopletofollow, "people are going to be followed and liked per session using #", hashtag, "and this will be repeated", sessionCounter, "times.");
 
     for (s = 0; s < sessionCounter; s++) {
 
-        driver.get('https://www.instagram.com/explore/tags/'+ hashtag +'/').then(function () {
+        driver.get('https://www.instagram.com/explore/tags/' + hashtag + '/').then(function () {
             console.log("# Initiating new session. ---");
         });
-        driver.wait(until.elementLocated(By.className('_mck9w')));
-        driver.findElements(By.className('_mck9w')).then((res) => {
+        driver.wait(until.elementLocated(By.className('_bz0w')));
+        driver.findElements(By.className('_bz0w')).then((res) => {
             res[9].click();
 
-            driver.wait(until.elementLocated(By.className('coreSpriteRightPaginationArrow'))).then(function(){
+            driver.wait(until.elementLocated(By.className('coreSpriteRightPaginationArrow'))).then(function () {
                 console.log("# Image loaded. Liking and following.")
             });
 
             for (p = 0; p < peopletofollow; p++) {
                 let date = new Date();
-                driver.findElements(By.className('_qv64e')).then((res) => {
+
+                driver.findElements(By.className('yZn4P')).then((res) => {
                     console.log("# Clicking follow button");
                     res[0].click();
                 });
-                driver.sleep(2000);
-                driver.findElements(By.className('_eszkz')).then((res) => {
+
+                // driver.sleep(2000);
+                driver.findElements(By.className('tiVCN')).then((res) => {
                     console.log("# Clicking <3 button");
                     res[0].click();
                 })
@@ -298,13 +322,11 @@ else if (mode == 3) {
                 });
                 driver.sleep(4000);
             }
-            console.log("# Session will be paused for", (pauseBetweenSessions/1000), "seconds.");
+            console.log("# Session will be paused for", (pauseBetweenSessions / 1000), "seconds.");
             driver.sleep(pauseBetweenSessions);
         })
     }
-}
-
-else {
+} else {
     driver.quit().then(function () {
         console.log("#ERROR: Mode is not defined! Check bot.js and make sure that 0, 1 or 2 is defined.")
     });
@@ -312,5 +334,5 @@ else {
 
 driver.quit().then(function () {
     let date = new Date();
-    console.log("# Job is done! Time of job completion:", date.getHours() + ":" + date.getMinutes()) ;
+    console.log("# Job is done! Time of job completion:", date.getHours() + ":" + date.getMinutes());
 });
