@@ -54,7 +54,6 @@ driver.get('http://www.instagram.com').then(function () {
     console.log("# Going to website...");
 });
 driver.sleep(3000);
-//driver.findElement(By.className('_msxj2')).click();
 driver.findElement(By.xpath("//html//form[@class='XFYOY']/span[@class='Um91Z _1OSdk']/button[1]")).click();
 driver.findElement(By.xpath("//input[@id='email']")).sendKeys(nick);
 driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(pass);
@@ -303,13 +302,20 @@ else if (mode == 1) {
 
             for (p = 0; p < peopletofollow; p++) {
                 let date = new Date();
+                let follow = false;
 
-                driver.findElements(By.className('yZn4P')).then((res) => {
-                    console.log("# Clicking follow button");
-                    res[0].click();
-                });
+                driver.findElements(By.xpath("//button[contains(text(),'Following')]")).then((res) => {
+                  if (res.length == 0) {
+                    driver.findElements(By.className('yZn4P')).then((res) => {
+                      console.log("# Clicking follow button");
+                      res[0].click();
+                    });
+                  } else {
+                    console.log("# Person is already being followed");
+                    return;
+                  }
+                })
 
-                // driver.sleep(2000);
                 driver.findElements(By.className('tiVCN')).then((res) => {
                     console.log("# Clicking <3 button");
                     res[0].click();

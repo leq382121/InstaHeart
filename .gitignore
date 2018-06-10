@@ -3,7 +3,6 @@ logs
 *.log
 npm-debug.log*
 
-
 # Runtime data
 pids
 *.pid
@@ -27,3 +26,6 @@ node_modules/
 
 # Optional REPL history
 .node_repl_history
+
+# Personal files
+info.json
