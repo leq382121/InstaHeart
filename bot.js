@@ -1,9 +1,9 @@
 /*
 # 
-#       InstaHeart v1.1 - straighfoward instagram crawler
+#       InstaHeart v1.2 - straighfoward instagram crawler
 #       Author: Liutauras Razma
 #       Date created: 2017-11-04
-#       Last update: 2018-06-10
+#       Last update: 2018-11-06
 #
 #       Mode 0 = clicks ammout of likes you have defined in "likesToClick" and quits.
 #       Mode 1 = same but repeats liking process as many times as you set in "sessionCounter" 
@@ -53,8 +53,14 @@ console.log("# Mode", mode, "is selected. Starting the process...")
 driver.get('http://www.instagram.com').then(function () {
     console.log("# Going to website...");
 });
-driver.sleep(3000);
-driver.findElement(By.xpath("//html//form[@class='XFYOY']/span[@class='Um91Z _1OSdk']/button[1]")).click();
+
+driver.sleep(1000 + Math.round(100 * Math.random()));
+
+driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).then(function () {
+  console.log('# Login button found, continue..');
+});
+
+driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).click();
 driver.findElement(By.xpath("//input[@id='email']")).sendKeys(nick);
 driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(pass);
 driver.sleep(1000);
@@ -68,9 +74,8 @@ if (authbool == true) {
 }
 
 driver.sleep(1000);
-driver.findElements(By.className("//a[contains(@class, 'tiVCN')]")).then(found => console.log("# Instagram feed loaded..."));
 
-//click only defined amount of likes and bye bye.
+//click only defined amount of likes and shut down.
 if (mode == 0) {
     driver.findElements(By.xpath("//a[contains(@class, 'tiVCN')]")).then(
         function (res) {
@@ -109,7 +114,9 @@ else if (mode == 1) {
             driver.sleep(pauseBetweenSessions);
         });
     }
-} else if (mode == 2 && irritatingBox == true) {
+} 
+
+else if (mode == 2 && irritatingBox == true) {
     console.log("# - Comment is going to be used:", comment, "and irritating box is set to", irritatingBox);
     console.log("# - Will be posted", commentsToWrite, "times");
 
@@ -193,7 +200,9 @@ else if (mode == 1) {
             }
         );
     }
-} else if (mode == 2 && irritatingBox == false) {
+} 
+
+else if (mode == 2 && irritatingBox == false) {
     console.log("# - Comment is going to be used:", comment, "and irritating box is set to", irritatingBox);
     console.log("# - Will be posted", commentsToWrite, "times");
 
@@ -283,7 +292,9 @@ else if (mode == 1) {
             driver.sleep(pauseBetweenSessions);
         });
     }
-} else if (mode == 3) {
+} 
+
+else if (mode == 3) {
     driver.sleep(3000);
     console.log("#", peopletofollow, "people are going to be followed and liked per session using #", hashtag, "and this will be repeated", sessionCounter, "times.");
 
@@ -301,37 +312,37 @@ else if (mode == 1) {
             });
 
             for (p = 0; p < peopletofollow; p++) {
-                let date = new Date();
-                let follow = false;
 
                 driver.findElements(By.xpath("//button[contains(text(),'Following')]")).then((res) => {
                   if (res.length == 0) {
-                    driver.findElements(By.className('yZn4P')).then((res) => {
+                    driver.findElements(By.className('oW_lN')).then((res) => {
                       console.log("# Clicking follow button");
                       res[0].click();
                     });
+                    // console.log("# Following people is turned off");
                   } else {
                     console.log("# Person is already being followed");
                     return;
                   }
                 })
 
-                driver.findElements(By.className('tiVCN')).then((res) => {
+                driver.findElements(By.className('dCJp8')).then((res) => {
                     console.log("# Clicking <3 button");
                     res[0].click();
                 })
-                driver.sleep(2000);
+                driver.sleep(4000 + Math.round(100 * Math.random()));
                 driver.findElements(By.className('coreSpriteRightPaginationArrow')).then((res) => {
                     let date = new Date();
-                    console.log("# Gong to the next picture. Present time:", date.getHours() + ":" + date.getMinutes());
+                    console.log("# Going to the next picture. Present time:", date.getHours() + ":" + date.getMinutes());
                     res[0].click();
                 });
-                driver.sleep(4000);
+                driver.sleep(2000 + Math.round(100 * Math.random()));
             }
             console.log("# Session will be paused for", (pauseBetweenSessions / 1000), "seconds.");
-            driver.sleep(pauseBetweenSessions);
+            driver.sleep(pauseBetweenSessions  + Math.round(100 * Math.random()));
         })
     }
+
 } else {
     driver.quit().then(function () {
         console.log("#ERROR: Mode is not defined! Check bot.js and make sure that 0, 1 or 2 is defined.")

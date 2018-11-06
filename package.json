@@ -14,7 +14,8 @@
   "author": "Liutauras Razma",
   "license": "ISC",
   "dependencies": {
-    "chromedriver": "^2.33.2",
-    "selenium-webdriver": "^3.6.0"
+    "chromedriver": "^2.43.1",
+    "selenium-webdriver": "^3.6.0",
+    "protractor": "^4.0.8"
   }
 }
