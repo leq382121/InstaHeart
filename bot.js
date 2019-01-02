@@ -309,7 +309,9 @@ else if (mode == 3) {
 
             driver.wait(until.elementLocated(By.className('coreSpriteRightPaginationArrow'))).then(function () {
                 console.log("# Image loaded. Liking and following.")
-            });
+            }); 
+
+            driver.sleep(3000);
 
             for (p = 0; p < peopletofollow; p++) {
 

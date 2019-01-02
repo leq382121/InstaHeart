@@ -2,14 +2,14 @@
 "ignick":"",
 "igpass":"",
 "mode": 3,
-"sessionCounter": 300,
+"sessionCounter": 3000,
 "likesToClick":4,
 "commentsToWrite": 4,
-"pauseBetweenSessions":400,
+"pauseBetweenSessions":500,
 "comments": ["nice angle!", "nice!", "cool:)", "!!!cute", "phenomenal!", "Damnn!!", "Amazing", "unreal", "Stunning"],
 "appBoxAppearing":true,
 "ifAuthentificatioRequired":false,
 "minutesForAuth":2,
-"hashtag": "architecture",
-"howmanypeopletofollowpersession":10
+"hashtag": "lithuania",
+"howmanypeopletofollowpersession":6
 }
