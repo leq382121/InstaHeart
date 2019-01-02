@@ -74,32 +74,37 @@ if (authbool == true) {
 }
 
 driver.sleep(1000);
+driver.executeScript("document.querySelector('.RnEpo').remove();");
 
 //click only defined amount of likes and shut down.
 if (mode == 0) {
-    driver.findElements(By.xpath("//a[contains(@class, 'tiVCN')]")).then(
-        function (res) {
-            // res here is an array of targeted elemnts (hearts)
-            for (i = 0; i < likesToClick; i++) {
-                console.log("*- likes clicked: ", i + 1, "-*");
-                res[i].click();
-                // Math.random() due to make it more-like humanistic instead using fixed time.
-                driver.sleep(2000 + Math.round(100 * Math.random()));
-            }
-        }
-    );
+  driver.sleep(3000);
+  driver.findElements(By.xpath("//button[contains(@class, 'dCJp8')]")).then(
+    function (res) {
+      
+      // res here is an array of targeted elemnts (hearts)
+      for (i = 0; i < (likesToClick * 5); i + 5) {
+        console.log("*- like clicked -*");
+        res[i].click();
+        // driver.executeScript("document.querySelectorAll('.dCJp8')["+i+"].click();");
+        // Math.random() due to make it more-like humanistic instead using fixed time.
+        driver.sleep(2000 + Math.round(100 * Math.random()));
+      }
+    }
+  );
 }
 
 //clicks defined amount of likes for defined number of repetitions (sessions) and pauses for defined amount of time
 else if (mode == 1) {
-
+  driver.sleep(3000);
     console.log("# Number of sessions:", sessionCounter);
     for (n = 0; n < sessionCounter; n++) {
 
         driver.get('http://www.instagram.com').then(function () {
             console.log("# Initiating new session..")
         });
-        driver.findElements(By.xpath("//a[contains(@class, 'tiVCN')]")).then(
+
+        driver.findElements(By.xpath("//button[contains(@class, 'dCJp8')]")).then(
 
             function (res) {
                 for (var i = 0; i < likesToClick; i++) {
@@ -131,7 +136,7 @@ else if (mode == 2 && irritatingBox == true) {
          * taking box out
          */
 
-        driver.wait(until.elementLocated(By.className('_lilm5')), 4000).then(
+        driver.wait(until.elementLocated(By.className('RnEpo')), 4000).then(
 
             function (res) {
 
@@ -205,9 +210,9 @@ else if (mode == 2 && irritatingBox == true) {
 else if (mode == 2 && irritatingBox == false) {
     console.log("# - Comment is going to be used:", comment, "and irritating box is set to", irritatingBox);
     console.log("# - Will be posted", commentsToWrite, "times");
+    driver.sleep(3000);
 
     let comIconArray, comBoxArray
-
 
     if (irritatingBox == true) {
         driver.wait(until.elementLocated(By.className('_lilm5')), 4000).then(
@@ -237,6 +242,7 @@ else if (mode == 2 && irritatingBox == false) {
         driver.get('http://www.instagram.com').then(function () {
             console.log("# Initiating new session..")
         });
+
         driver.findElements(By.xpath("//a[contains(@class, 'OV9Wd')]")).then(
             function (res) {
                 comIconArray = res;
