@@ -1,6 +1,7 @@
 {
 "ignick":"",
 "igpass":"",
+"accountType":"fb",
 "mode": 3,
 "sessionCounter": 3000,
 "likesToClick":4,
@@ -10,6 +11,6 @@
 "appBoxAppearing":true,
 "ifAuthentificatioRequired":false,
 "minutesForAuth":2,
-"hashtag": "lithuania",
+"hashtag": "architecture",
 "howmanypeopletofollowpersession":6
 }

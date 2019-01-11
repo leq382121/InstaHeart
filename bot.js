@@ -50,23 +50,39 @@ const peopletofollow = info.howmanypeopletofollowpersession;
 
 driver.manage().window().setSize(windowWidth, 700); //683
 console.log("# Mode", mode, "is selected. Starting the process...")
-driver.get('http://www.instagram.com').then(function () {
+
+
+if (info.accountType == "fb") {
+  // FACEBOOK ACCOUNT
+
+  driver.get('http://www.instagram.com').then(function () {
+      console.log("# Going to website...");
+  });
+  driver.sleep(1000 + Math.round(100 * Math.random()));
+  driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).then(function () {
+    console.log('# Login button found, continue..');
+  });
+  driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).click();
+  driver.findElement(By.xpath("//input[@id='email']")).sendKeys(nick);
+  driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(pass);
+  driver.sleep(1000);
+  driver.findElement(By.xpath("//button[@id='loginbutton']")).click().then(function () {
+      console.log("# Loging in...");
+  });
+} else {
+  // INSTAGRAM ACCOUNT
+
+  driver.get('https://www.instagram.com/accounts/login/').then(function () {
     console.log("# Going to website...");
-});
-
-driver.sleep(1000 + Math.round(100 * Math.random()));
-
-driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).then(function () {
-  console.log('# Login button found, continue..');
-});
-
-driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).click();
-driver.findElement(By.xpath("//input[@id='email']")).sendKeys(nick);
-driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(pass);
-driver.sleep(1000);
-driver.findElement(By.xpath("//button[@id='loginbutton']")).click().then(function () {
+  });
+  driver.sleep(1000 + Math.round(100 * Math.random()));
+  driver.findElement(By.xpath("//input[@name='username']")).sendKeys(nick);
+  driver.findElement(By.xpath("//input[@name='password']")).sendKeys(pass);
+  driver.sleep(1000);
+  driver.findElement(By.xpath("//button[@type='submit']")).click().then(function () {
     console.log("# Loging in...");
-});
+  });
+}
 
 if (authbool == true) {
     console.log("# You have", timeforauth / 60000, "minutes to choose defined authentification and prove that it's you.");
