@@ -37,6 +37,107 @@ const peopletofollow = info.howmanypeopletofollowpersession;
 
 console.log("# Mode", mode, "is selected. Starting the process...")
 
+const BotWorkflow = async (driver) => {
+    switch (mode) {
+        case 0: 
+            await driver.sleep(3000);
+            await driver.findElements(By.xpath("//button[contains(@class, 'wpO6b')]")).then(
+                async (res) => {
+                    // res is an array of targeted elemnts (hearts)
+                    for (i = 0; i < (likesToClick * 5); i + 5) {
+                        await console.log("*- like clicked -*");
+                        await res[i].click();
+                        await driver.sleep(2000 + Math.round(100 * Math.random()));
+                    }
+                }
+            );
+            break;
+
+        case 1: 
+            await driver.sleep(3000);
+            await console.log("# Number of sessions:", sessionCounter);
+
+            for (n = 0; n < sessionCounter; n++) {
+                let date = new Date();
+
+                await driver.get('http://www.instagram.com').then(function () {
+                    console.log("# Initiating new session..")
+                });
+
+                await driver.sleep(3000);
+                await driver.findElements(By.xpath("//*[contains(@class, 'fr66n')]//button[contains(@class, 'wpO6b')]")).then(
+                    async (res) => {
+                        for (let i = 0; i < likesToClick; i++) {
+                            await driver.sleep(3000);
+                            await console.log("*- likes clicked: ", i + 1, "-*");
+                            await res[i].click();
+                        }
+                    }
+                )
+
+                await console.log("# Session finished. pausing for", pauseBetweenSessions / 1000, "seconds. Present time:", date.getHours() + ":" + date.getMinutes());
+                await driver.sleep(pauseBetweenSessions);
+            }
+            break;
+
+        case 3:  
+            await driver.sleep(3000);
+            console.log("#", peopletofollow, "people are going to be followed and liked per session using", "#" + hashtag, "and this will be repeated", sessionCounter, "times.");
+
+            for (s = 0; s < sessionCounter; s++) {
+
+                await driver.get('https://www.instagram.com/explore/tags/' + hashtag + '/').then(() => console.log("# Initiating new session. ---"));
+                await driver.wait(until.elementLocated(By.className('_bz0w')));
+                await driver.findElements(By.className('_bz0w')).then(async (res) => {
+
+                    await res[9].click();
+                    await driver.wait(until.elementLocated(By.className('coreSpriteRightPaginationArrow'))).then(() => console.log("# Image loaded. Liking and following.")); 
+                    await driver.sleep(3000);
+
+                    for (p = 0; p < peopletofollow; p++) {
+
+                        // await driver.findElements(By.xpath("//button[contains(text(),'Following')]")).then(async (res) => {
+                        //     if (res.length === 0) {
+                        //         await driver.findElements(By.className('sqdOP')).then(async (res) => {
+                        //             console.log("# Clicking follow button");
+                        //             await res[0].click();
+                        //         });
+                        //     } else {
+                        //         console.log("# Person is already being followed");
+                        //         return;
+                        //     }
+                        // })
+
+                        console.log("# Following people is turned off");
+
+                        await driver.findElements(By.xpath("//*[contains(@class, 'fr66n')]//button[contains(@class, 'wpO6b')]")).then((res) => {
+                            console.log("# Clicking <3 button");
+                            return res[0].click();
+                        });
+
+                        await driver.sleep(4000 + Math.round(100 * Math.random()));
+                        await driver.findElements(By.className('coreSpriteRightPaginationArrow')).then(async (res) => {
+                            let date = new Date();
+
+                            console.log("# Going to the next picture. Present time:", date.getHours() + ":" + date.getMinutes());
+                            return res[0].click();
+                        });
+
+                        await driver.sleep(2000 + Math.round(100 * Math.random()));
+                    }
+
+                    console.log("# Session will be paused for", (pauseBetweenSessions / 1000), "seconds.");
+                    await driver.sleep(pauseBetweenSessions  + Math.round(100 * Math.random()));
+                    
+                })
+            }
+        
+        default:
+            await console.log(`Please Choose a Mode first`);
+            await driver.quit();
+            break;
+    }
+}
 
 if (info.accountType == "fb") {
   // FACEBOOK ACCOUNT (NOT WORKING YET)
@@ -44,53 +145,49 @@ if (info.accountType == "fb") {
   (async () => {
     let driver = await new Builder().forBrowser('chrome').build();
     try {
-      await driver.get('http://www.instagram.com').then(function () {
-        console.log("# Going to website...");
-    });
-      await driver.sleep(1000 + Math.round(100 * Math.random()));
-      await driver.findElement(By.xpath("//button[contains(@class,'aOOlW')]")).then(function () {
+        await driver.get('http://www.instagram.com').then(function () {
+            console.log("# Going to website...");
+        });
+        await driver.sleep(1000 + Math.round(100 * Math.random()));
+        await driver.findElement(By.xpath("//button[contains(@class,'aOOlW')]")).then(function () {
         console.log('# Cookie button found');
-      });
+        });
 
-      await driver.findElement(By.xpath("//button[contains(@class,'aOOlW')]")).click();
-      await driver.sleep(1000 + Math.round(100 * Math.random()));
-      await driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).then(function () {
+        await driver.findElement(By.xpath("//button[contains(@class,'aOOlW')]")).click();
+        await driver.sleep(1000 + Math.round(100 * Math.random()));
+        await driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).then(function () {
         console.log('# Login button found');
-      });
+        });
 
-      await driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).click();
-      await driver.sleep(1000 + Math.round(100 * Math.random()));
-      await driver.findElement(By.xpath("//button[contains(@class,'selected _51sy')]")).then(function () {
+        await driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).click();
+        await driver.sleep(1000 + Math.round(100 * Math.random()));
+        await driver.findElement(By.xpath("//button[contains(@class,'selected _51sy')]")).then(function () {
         console.log('# Facebook cookie button found');
-      });
+        });
 
-      await driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).click();
-      await driver.findElement(By.xpath("//input[@id='email']")).sendKeys(nick);
-      await driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(pass);
-      await driver.sleep(1000);
-      await driver.findElement(By.xpath("//button[@id='loginbutton']")).click().then(function () {
-          console.log("# Loging in...");
-      });
+        await driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).click();
+        await driver.findElement(By.xpath("//input[@id='email']")).sendKeys(nick);
+        await driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(pass);
+        await driver.sleep(1000);
+        await driver.findElement(By.xpath("//button[@id='loginbutton']")).click().then(function () {
+            console.log("# Loging in...");
+        });
+
+        await driver.sleep(3000);
+        await driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).then(() => console.log('# Save Info button found, clicking'));
+        await driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).click();
+
+        await driver.sleep(3000);
+        await driver.findElement(By.xpath("//button[contains(@class,'HoLwm')]")).then(() => console.log('# Info button found, clicking'));
+        await driver.findElement(By.xpath("//button[contains(@class,'HoLwm')]")).click();
 
     } finally {
-    //   await driver.quit();
+        await BotWorkflow(driver);
+
+        console.log('# Work is Done');
+        await driver.quit();
     }
   })();
-
-//   driver.get('http://www.instagram.com').then(function () {
-//       console.log("# Going to website...");
-//   });
-//   driver.sleep(1000 + Math.round(100 * Math.random()));
-//   driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).then(function () {
-//     console.log('# Login button found, continue..');
-//   });
-//   await driver.findElement(By.xpath("//button[contains(@class,'sqdOP')]")).click();
-//   await driver.findElement(By.xpath("//input[@id='email']")).sendKeys(nick);
-//   await driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(pass);
-//   await driver.sleep(1000);
-//   await driver.findElement(By.xpath("//button[@id='loginbutton']")).click().then(function () {
-//       console.log("# Loging in...");
-//   });
 } else {
   // INSTAGRAM ACCOUNT
 
@@ -118,63 +215,19 @@ if (info.accountType == "fb") {
         await driver.sleep(3000);
         await driver.findElement(By.xpath("//button[contains(@class,'HoLwm')]")).then(() => console.log('# Info button found, clicking'));
         await driver.findElement(By.xpath("//button[contains(@class,'HoLwm')]")).click();
-
-    } 
+    }
     
     catch {
         console.error(err);
     } 
     
     finally {
-        switch (mode) {
-            case 0: 
-                await driver.sleep(3000);
-                await driver.findElements(By.xpath("//button[contains(@class, 'wpO6b')]")).then(
-                    async (res) => {
-                        // res is an array of targeted elemnts (hearts)
-                        for (i = 0; i < (likesToClick * 5); i + 5) {
-                            await console.log("*- like clicked -*");
-                            await res[i].click();
-                            await driver.sleep(2000 + Math.round(100 * Math.random()));
-                        }
-                    }
-                );
-                break;
+        await BotWorkflow(driver);
 
-            case 1: 
-                await driver.sleep(3000);
-                await console.log("# Number of sessions:", sessionCounter);
-    
-                for (n = 0; n < sessionCounter; n++) {
-                    let date = new Date();
-    
-                    await driver.get('http://www.instagram.com').then(function () {
-                        console.log("# Initiating new session..")
-                    });
-    
-                    await driver.sleep(3000);
-                    await driver.findElements(By.xpath("//*[contains(@class, 'fr66n')]//button[contains(@class, 'wpO6b')]")).then(
-                        async (res) => {
-                            for (let i = 0; i < likesToClick; i++) {
-                                await driver.sleep(3000);
-                                await console.log("*- likes clicked: ", i + 1, "-*");
-                                await res[i].click();
-                            }
-                        }
-                    )
-
-                    await console.log("# Session finished. pausing for", pauseBetweenSessions / 1000, "seconds. Present time:", date.getHours() + ":" + date.getMinutes());
-                    await driver.sleep(pauseBetweenSessions);
-                }
-                break;
-
-            default:
-                await console.log(`Please Choose a Mode first`);
-                await driver.quit();
-                break;
-        }
-
-        await driver.quit();
+        await driver.quit().then(function () {
+            let date = new Date();
+            console.log("# Job is done! Time of job completion:", date.getHours() + ":" + date.getMinutes());
+        });;
     }
   })();
 }
@@ -188,49 +241,7 @@ if (info.accountType == "fb") {
 // driver.executeScript("document.querySelector('.RnEpo').remove();");
 
 // //click only defined amount of likes and shut down.
-// if (mode == 0) {
-//   driver.sleep(3000);
-//   driver.findElements(By.xpath("//button[contains(@class, 'dCJp8')]")).then(
-//     function (res) {
-      
-//       // res here is an array of targeted elemnts (hearts)
-//       for (i = 0; i < (likesToClick * 5); i + 5) {
-//         console.log("*- like clicked -*");
-//         res[i].click();
-//         // driver.executeScript("document.querySelectorAll('.dCJp8')["+i+"].click();");
-//         // Math.random() due to make it more-like humanistic instead using fixed time.
-//         driver.sleep(2000 + Math.round(100 * Math.random()));
-//       }
-//     }
-//   );
-// }
-
-// //clicks defined amount of likes for defined number of repetitions (sessions) and pauses for defined amount of time
-// else if (mode == 1) {
-//   driver.sleep(3000);
-//     console.log("# Number of sessions:", sessionCounter);
-//     for (n = 0; n < sessionCounter; n++) {
-
-//         driver.get('http://www.instagram.com').then(function () {
-//             console.log("# Initiating new session..")
-//         });
-
-//         driver.findElements(By.xpath("//button[contains(@class, 'dCJp8')]")).then(
-
-//             function (res) {
-//                 for (var i = 0; i < likesToClick; i++) {
-//                     console.log("*- likes clicked: ", i + 1, "-*");
-//                     res[i].click();
-//                 }
-//             }
-
-//         ).then(function () {
-//             let date = new Date();
-//             console.log("# Session finished. pausing for", pauseBetweenSessions, "seconds. Present time:", date.getHours() + ":" + date.getMinutes());
-//             driver.sleep(pauseBetweenSessions);
-//         });
-//     }
-// } 
+ 
 
 // else if (mode == 2 && irritatingBox == true) {
 //     console.log("# - Comment is going to be used:", comment, "and irritating box is set to", irritatingBox);
@@ -411,60 +422,10 @@ if (info.accountType == "fb") {
 //     }
 // } 
 
-// else if (mode == 3) {
-//     driver.sleep(3000);
-//     console.log("#", peopletofollow, "people are going to be followed and liked per session using #", hashtag, "and this will be repeated", sessionCounter, "times.");
-
-//     for (s = 0; s < sessionCounter; s++) {
-
-//         driver.get('https://www.instagram.com/explore/tags/' + hashtag + '/').then(function () {
-//             console.log("# Initiating new session. ---");
-//         });
-//         driver.wait(until.elementLocated(By.className('_bz0w')));
-//         driver.findElements(By.className('_bz0w')).then((res) => {
-//             res[9].click();
-
-//             driver.wait(until.elementLocated(By.className('coreSpriteRightPaginationArrow'))).then(function () {
-//                 console.log("# Image loaded. Liking and following.")
-//             }); 
-
-//             driver.sleep(3000);
-
-//             for (p = 0; p < peopletofollow; p++) {
-
-//                 driver.findElements(By.xpath("//button[contains(text(),'Following')]")).then((res) => {
-//                   if (res.length == 0) {
-//                     driver.findElements(By.className('oW_lN')).then((res) => {
-//                       console.log("# Clicking follow button");
-//                       res[0].click();
-//                     });
-//                     // console.log("# Following people is turned off");
-//                   } else {
-//                     console.log("# Person is already being followed");
-//                     return;
-//                   }
-//                 })
-
-//                 driver.findElements(By.className('dCJp8')).then((res) => {
-//                     console.log("# Clicking <3 button");
-//                     res[0].click();
-//                 })
-//                 driver.sleep(4000 + Math.round(100 * Math.random()));
-//                 driver.findElements(By.className('coreSpriteRightPaginationArrow')).then((res) => {
-//                     let date = new Date();
-//                     console.log("# Going to the next picture. Present time:", date.getHours() + ":" + date.getMinutes());
-//                     res[0].click();
-//                 });
-//                 driver.sleep(2000 + Math.round(100 * Math.random()));
-//             }
-//             console.log("# Session will be paused for", (pauseBetweenSessions / 1000), "seconds.");
-//             driver.sleep(pauseBetweenSessions  + Math.round(100 * Math.random()));
-//         })
-//     }
 
 // } else {
 //     driver.quit().then(function () {
-//         console.log("#ERROR: Mode is not defined! Check bot.js and make sure that 0, 1 or 2 is defined.")
+//         console.log("#ERROR: Mode is not defined! Check bot.js and make sure that 0, 1, 2 or 3 is defined.")
 //     });
 // }
 
