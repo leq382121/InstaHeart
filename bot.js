@@ -87,11 +87,11 @@ const BotWorkflow = async (driver) => {
             for (s = 0; s < sessionCounter; s++) {
 
                 await driver.get('https://www.instagram.com/explore/tags/' + hashtag + '/').then(() => console.log("# Initiating new session. ---"));
-                await driver.wait(until.elementLocated(By.className('_bz0w')));
-                await driver.findElements(By.className('_bz0w')).then(async (res) => {
+                await driver.wait(until.elementLocated(By.className('_aabd')));
+                await driver.findElements(By.className('_aabd')).then(async (res) => {
 
                     await res[9].click();
-                    await driver.wait(until.elementLocated(By.className('coreSpriteRightPaginationArrow'))).then(() => console.log("# Image loaded. Liking and following.")); 
+                    await driver.wait(until.elementLocated(By.className('_aaqg'))).then(() => console.log("# Image loaded. Liking and following.")); 
                     await driver.sleep(3000);
 
                     for (p = 0; p < peopletofollow; p++) {
@@ -110,13 +110,13 @@ const BotWorkflow = async (driver) => {
 
                         console.log("# Following people is turned off");
 
-                        await driver.findElements(By.xpath("//*[contains(@class, 'fr66n')]//button[contains(@class, 'wpO6b')]")).then((res) => {
+                        await driver.findElements(By.xpath("//*[contains(@class, '_aamw')]//button[contains(@class, '_abl-')]")).then((res) => {
                             console.log("# Clicking <3 button");
                             return res[0].click();
                         });
 
                         await driver.sleep(4000 + Math.round(100 * Math.random()));
-                        await driver.findElements(By.className('coreSpriteRightPaginationArrow')).then(async (res) => {
+                        await driver.findElements(By.xpath("//*[contains(@class, '_aaqg')]//button[contains(@class, '_abl-')]")).then(async (res) => {
                             let date = new Date();
 
                             console.log("# Going to the next picture. Present time:", date.getHours() + ":" + date.getMinutes());
